@@ -3,12 +3,18 @@ import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { getGuestName } from '../utils/helpers';
 
-const Envelope = ({ onOpen }) => {
+const Envelope = ({ onOpen, onOpenStart }) => {
   const [isOpened, setIsOpened] = useState(false);
   const guestName = getGuestName();
 
   const handleOpen = () => {
+    if (isOpened) {
+      return;
+    }
+
     setIsOpened(true);
+    onOpenStart?.();
+
     setTimeout(() => {
       onOpen();
     }, 800);
@@ -70,6 +76,7 @@ const Envelope = ({ onOpen }) => {
 
             {/* Open button */}
             <motion.button
+              type="button"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}

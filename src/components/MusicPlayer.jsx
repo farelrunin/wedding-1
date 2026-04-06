@@ -1,55 +1,72 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import { Music, Play, Pause } from 'lucide-react';
 
-const MusicPlayer = ({ musicUrl }) => {
+const MusicPlayer = forwardRef(({ musicUrl, isVisible = true }, ref) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showPlayer, setShowPlayer] = useState(false);
   const audioRef = useRef(null);
 
-  // Auto-play music on page load (optional, respects user preferences)
-  useEffect(() => {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-    
-    if (!prefersReducedMotion && audioRef.current) {
-      // Attempt to play on user interaction first
-      const handleUserInteraction = () => {
-        audioRef.current?.play().catch((err) => {
-          console.log('Autoplay prevented:', err);
-        });
-        document.removeEventListener('click', handleUserInteraction);
-      };
-      document.addEventListener('click', handleUserInteraction);
+  const playAudio = async () => {
+    const audio = audioRef.current;
 
-      return () => document.removeEventListener('click', handleUserInteraction);
+    if (!audio) {
+      return false;
     }
-  }, []);
 
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch((err) => {
-          console.error('Error playing audio:', err);
-        });
-      }
-      setIsPlaying(!isPlaying);
+    try {
+      await audio.play();
+      return true;
+    } catch (err) {
+      console.error('Error playing audio:', err);
+      setIsPlaying(false);
+      return false;
     }
   };
 
-  // Reset isPlaying state when audio ends
+  const pauseAudio = () => {
+    audioRef.current?.pause();
+  };
+
+  useImperativeHandle(ref, () => ({
+    playFromUserGesture: playAudio,
+    pause: pauseAudio,
+  }));
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      pauseAudio();
+    } else {
+      void playAudio();
+    }
+  };
+
   useEffect(() => {
     const audio = audioRef.current;
+
+    if (!audio) {
+      return undefined;
+    }
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
     const handleEnded = () => setIsPlaying(false);
 
-    if (audio) {
-      audio.addEventListener('ended', handleEnded);
-      return () => audio.removeEventListener('ended', handleEnded);
-    }
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('ended', handleEnded);
+    };
   }, []);
 
   return (
@@ -59,14 +76,20 @@ const MusicPlayer = ({ musicUrl }) => {
         ref={audioRef}
         src={musicUrl}
         loop
+        preload="auto"
+        playsInline
       />
 
       {/* Floating Music Player Button */}
       <motion.button
+        type="button"
         initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
         onClick={() => setShowPlayer(!showPlayer)}
-        className="fixed bottom-8 right-8 z-30 w-14 h-14 bg-gradient-to-br from-light-gold to-gold-600 rounded-full shadow-lg flex items-center justify-center hover:shadow-xl transition group"
+        className={`fixed bottom-8 right-8 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-light-gold to-gold-600 shadow-lg transition group hover:shadow-xl ${
+          isVisible ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
+        aria-label="Buka kontrol musik"
       >
         <motion.div
           animate={isPlaying ? { rotate: 360 } : { rotate: 0 }}
@@ -104,7 +127,7 @@ const MusicPlayer = ({ musicUrl }) => {
       </motion.button>
 
       {/* Expanded Player */}
-      {showPlayer && (
+      {showPlayer && isVisible && (
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -168,6 +191,7 @@ const MusicPlayer = ({ musicUrl }) => {
           {/* Control buttons */}
           <div className="flex gap-3 justify-center">
             <motion.button
+              type="button"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={togglePlay}
@@ -202,6 +226,8 @@ const MusicPlayer = ({ musicUrl }) => {
       )}
     </>
   );
-};
+});
+
+MusicPlayer.displayName = 'MusicPlayer';
 
 export default MusicPlayer;
