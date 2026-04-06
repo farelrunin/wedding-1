@@ -101,6 +101,6 @@ export const weddingData = {
   ],
   qrisCode: '/images/qris.jpg',
   giftAddress: 'Jln. Merdeka No. 50, Apartemen Central City, Unit 1502, Jakarta Selatan 12345',
-  musicUrl: '/music/romantic.mp3',
+  musicUrl: '/wedding-song.mp3',
   countdown: '2024-12-15T09:00:00',
 };
