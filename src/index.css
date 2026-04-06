@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #F5F5F0;
+  color: #5C4A3D;
+  overflow-x: hidden;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-light-gold text-dark-brown font-semibold rounded-lg hover:bg-yellow-600 transition-all duration-300 hover:shadow-lg hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-wood-brown text-cream rounded-lg hover:bg-dark-brown transition-all duration-300 hover:shadow-lg;
+  }
+
+  .section-divider {
+    @apply h-1 bg-gradient-to-r from-light-gold via-wood-brown to-light-gold my-8;
+  }
+
+  .ornament {
+    @apply text-light-gold text-4xl opacity-50;
+  }
+
+  .fade-in-animation {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .slide-up-animation {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  .heading-serif {
+    @apply font-serif font-bold text-dark-brown;
+  }
+
+  .heading-script {
+    @apply font-script font-normal text-wood-brown;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F5F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B735B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5C4A3D;
+}
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Prevent image distortion in lightbox */
+.lightbox-image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #2a2420;
+    color: #e8e3dd;
+  }
+}

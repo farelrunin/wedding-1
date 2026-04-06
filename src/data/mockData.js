@@ -1,0 +1,106 @@
+export const weddingData = {
+  couple: {
+    groom: {
+      fullName: 'Ahmad Rizki Pratama',
+      nickName: 'Rizki',
+      father: 'Bapak Setiaw Wibowo',
+      mother: 'Ibu Dewi Astuti',
+      photo: '/images/groom.jpg',
+      instagram: 'https://instagram.com/ahmadrizki',
+      description: 'Seorang profesional muda dengan passion terhadap teknologi dan traveling.',
+    },
+    bride: {
+      fullName: 'Siti Nurhaliza Wijaya',
+      nickName: 'Haliza',
+      father: 'Bapak Wijaya Kusuma',
+      mother: 'Ibu Sinta Dewi',
+      photo: '/images/bride.jpg',
+      instagram: 'https://instagram.com/stitnurhaliza',
+      description: 'Seorang desainer kreatif dengan cinta mendalam terhadap seni dan keindahan.',
+    },
+  },
+  opening: {
+    greeting: 'Assalamu\'alaikum Warahmatullahi Wabarakatuh',
+    quote: '"Pernikahan adalah permulaan dari cerita cinta yang abadi. Kami mengundang Anda untuk menjadi bagian dari momen istimewa kami."',
+  },
+  events: [
+    {
+      id: 1,
+      name: 'Akad Nikah',
+      date: '2024-12-15T09:00:00',
+      endDate: '2024-12-15T11:00:00',
+      location: 'Masjid Al-Ikhlas',
+      address: 'Jln. Ahmad Yani No. 45, Jakarta Selatan',
+      description: 'Acara akad nikah berlangsung khidmat dengan kehadiran keluarga dekat',
+      gmap: 'https://maps.google.com/?q=Masjid+Al-Ikhlas+Jakarta',
+    },
+    {
+      id: 2,
+      name: 'Resepsi Pernikahan',
+      date: '2024-12-15T18:00:00',
+      endDate: '2024-12-15T23:00:00',
+      location: 'Ballroom Grand Hotel Jakarta',
+      address: 'Jln. Thamrin No. 12, Jakarta Pusat',
+      description: 'Resepsi makan malam dengan hidangan istimewa dan hiburan seru',
+      gmap: 'https://maps.google.com/?q=Grand+Hotel+Jakarta',
+    },
+  ],
+  gallery: [
+    {
+      id: 1,
+      src: '/images/gallery-1.jpg',
+      thumbnail: '/images/gallery-1-thumb.jpg',
+      alt: 'Pre-wedding di pantai',
+      caption: 'Momen romantis di pantai',
+    },
+    {
+      id: 2,
+      src: '/images/gallery-2.jpg',
+      thumbnail: '/images/gallery-2-thumb.jpg',
+      alt: 'Pre-wedding di taman',
+      caption: 'Keindahan alam yang memukau',
+    },
+    {
+      id: 3,
+      src: '/images/gallery-3.jpg',
+      thumbnail: '/images/gallery-3-thumb.jpg',
+      alt: 'Pre-wedding potrait',
+      caption: 'Potrait yang intim',
+    },
+    {
+      id: 4,
+      src: '/images/gallery-4.jpg',
+      thumbnail: '/images/gallery-4-thumb.jpg',
+      alt: 'Pre-wedding candid',
+      caption: 'Momen candid yang berkesan',
+    },
+  ],
+  videos: [
+    {
+      id: 1,
+      title: 'Save The Date',
+      videoId: 'dQw4w9WgXcQ', // YouTube video ID
+      thumbnail: '/images/video-1.jpg',
+    },
+  ],
+  bankAccounts: [
+    {
+      id: 1,
+      bankName: 'BCA',
+      accountName: 'Ahmad Rizki Pratama',
+      accountNumber: '1234567890',
+      icon: 'CreditCard',
+    },
+    {
+      id: 2,
+      bankName: 'Mandiri',
+      accountName: 'Siti Nurhaliza Wijaya',
+      accountNumber: '9876543210',
+      icon: 'CreditCard',
+    },
+  ],
+  qrisCode: '/images/qris.jpg',
+  giftAddress: 'Jln. Merdeka No. 50, Apartemen Central City, Unit 1502, Jakarta Selatan 12345',
+  musicUrl: '/music/romantic.mp3',
+  countdown: '2024-12-15T09:00:00',
+};
